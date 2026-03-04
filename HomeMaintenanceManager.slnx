@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/HomeMaintenanceManager.API/HomeMaintenanceManager.API.csproj" />
+    <Project Path="src/HomeMaintenanceManager.Application/HomeMaintenanceManager.Application.csproj" />
+    <Project Path="src/HomeMaintenanceManager.Domain/HomeMaintenanceManager.Domain.csproj" />
+    <Project Path="src/HomeMaintenanceManager.Infrastructure/HomeMaintenanceManager.Infrastructure.csproj" />
+  </Folder>
+</Solution>
