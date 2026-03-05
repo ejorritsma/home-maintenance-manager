@@ -1,24 +1,20 @@
 namespace HomeMaintenanceManager.Domain.Entities;
 
-public class Asset
+public class Asset(string name)
 {
-    public Guid Id { get; private set; }
-    public string Name { get; private set; }
-
-    public Asset(string name)
-    {
-        if (string.IsNullOrWhiteSpace(name))
-            throw new ArgumentException("Asset name cannot be empty.", nameof(name));
-
-        Id = Guid.NewGuid();
-        Name = name;
-    }
+    public Guid Id { get; private set; } = Guid.NewGuid();
+    public string Name { get; private set; } = ValidateName(name);
 
     public void Rename(string newName)
     {
-        if (string.IsNullOrWhiteSpace(newName))
-            throw new ArgumentException("New asset name cannot be empty.", nameof(newName));
+        Name = ValidateName(newName);
+    }
 
-        Name = newName;
+    private static string ValidateName(string name)
+    {
+        if (string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException("Name cannot be empty.", nameof(name));
+
+        return name;
     }
 }

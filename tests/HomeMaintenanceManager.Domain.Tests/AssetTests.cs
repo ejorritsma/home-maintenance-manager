@@ -5,7 +5,7 @@ namespace HomeMaintenanceManager.Domain.Tests;
 public class AssetTests
 {
     [Fact]
-    public void CreatingAsset_WithValidName_SetsActiveStatus()
+    public void CreatingAsset_WithValidName()
     {
         const string name = "Dishwasher";
 
