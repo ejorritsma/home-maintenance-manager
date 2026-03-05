@@ -1,6 +1,16 @@
 # Home Maintenance Manager
+Personal project exploring domain-driven design, EF Core, and clean architecture.
+Building a maintenance tracking system for household assets and machines.
 
-A portfolio project in C#, using Domain Driven Design. Work in progress.
+Tech stack
+- C# / .NET 10
+- Entity Framework Core
+- PostgreSQL
+- xUnit
+- Clean Architecture
+- React (planned)
 
-The goal is to build a system that can be used to keep track of maintenance for assets in your home.
-For example, the washing machine or your robot vacuum. 
+Current focus
+- Domain modelling
+- Test-driven development
+- Building a maintainable backend architecture
