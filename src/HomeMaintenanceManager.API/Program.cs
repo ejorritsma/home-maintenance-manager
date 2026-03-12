@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add the database context to be used for database operations
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
@@ -14,16 +15,12 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<IAssetRepository, AssetRepository>();
 builder.Services.AddScoped<CreateAsset>();
 
+// Register the API Controllers
+builder.Services.AddControllers();
+
 var app = builder.Build();
 
-app.MapPost(
-    "/assets",
-    async (CreateAssetRequest request, CreateAsset createAsset) =>
-    {
-        var id = await createAsset.Execute(name: request.Name);
-
-        return Results.Created($"/assets/{id}", id);
-    }
-);
+// Add endpoints for controller actions
+app.MapControllers();
 
 app.Run();
