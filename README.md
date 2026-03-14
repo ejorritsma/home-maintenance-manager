@@ -1,6 +1,6 @@
-# Home Maintenance Manager
+# Asset Care - Asset Maintenance Management
 Personal project exploring domain-driven design using C# / .NET and EF Core.
-Building a maintenance tracking system for household assets and machines.
+Building a personal asset maintenance tracker for managing upkeep of household devices, tools and equipment.
 
 Tech stack
 - C# / .NET 10
@@ -21,9 +21,9 @@ POSTGRES_HOST=localhost
 POSTGRES_PORT=5432
 ```
 
-2. Set up user secrets in the HomeMaintenanceManager.API project (so the API can connect to the database locally):
+2. Set up user secrets in the AssetCare.API project (so the API can connect to the database locally):
 ```bash
-cd src/HomeMaintenanceManager.API
+cd src/AssetCare.API
 
 dotnet user-secrets init
 dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Host=localhost;Port=5432;Database=home_maintenance_manager;Username=postgres;Password=supersecret"
@@ -35,11 +35,11 @@ dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Host=localhost;Po
 docker compose up
 
 # Run the migrations
-dotnet ef database update --project src/HomeMaintenanceManager.Infrastructure --startup-project src/HomeMaintenanceManager.API
+dotnet ef database update --project src/AssetCare.Infrastructure --startup-project src/AssetCare.API
 ```
 
 4. Run the project:
 ```bash
 # Start the API
-dotnet run --project src/HomeMaintenanceManager.API
+dotnet run --project src/AssetCare.API
 ```
