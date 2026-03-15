@@ -13,7 +13,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 // If anyone asks for the IAssetRepository, give them the AssetRepository from Infrastructure that talks with the database via EF Core.
 builder.Services.AddScoped<IAssetRepository, AssetRepository>();
-builder.Services.AddScoped<CreateAsset>();
+builder.Services.AddScoped<AssetService>();
 
 // Register the API Controllers
 builder.Services.AddControllers();

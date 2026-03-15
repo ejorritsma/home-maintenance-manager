@@ -11,10 +11,10 @@ public class CreateAssetTest
     public async Task Execute_WithValidName_AddsAssetToRepository()
     {
         var repositoryMock = new Mock<IAssetRepository>();
-        var command = new CreateAsset(repositoryMock.Object);
+        var command = new AssetService(repositoryMock.Object);
         var name = "Washing Machine";
 
-        var id = command.Execute(name: name);
+        var id = command.Create(name: name);
 
         repositoryMock.Verify(r => r.AddAsync(It.IsAny<Asset>()), Times.Once);
         repositoryMock.Verify(r => r.SaveChangesAsync(), Times.Once);

@@ -12,6 +12,11 @@ public class AssetRepository(AppDbContext dbContext) : IAssetRepository
         await _dbContext.Assets.AddAsync(asset);
     }
 
+    public async Task<Asset?> GetByIdAsync(Guid id)
+    {
+        return await _dbContext.Assets.FindAsync(keyValues: id);
+    }
+
     public async Task SaveChangesAsync()
     {
         await _dbContext.SaveChangesAsync();

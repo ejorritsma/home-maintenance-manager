@@ -2,11 +2,11 @@ using AssetCare.Domain.Entities;
 
 namespace AssetCare.Application.Assets.Commands;
 
-public class CreateAsset(IAssetRepository assetRepository)
+public class AssetService(IAssetRepository assetRepository)
 {
     private readonly IAssetRepository _assetRepository = assetRepository;
 
-    public async Task<Guid> Execute(string name)
+    public async Task<Guid> Create(string name)
     {
         var asset = new Asset(name: name);
 
@@ -14,5 +14,10 @@ public class CreateAsset(IAssetRepository assetRepository)
         await _assetRepository.SaveChangesAsync();
 
         return asset.Id;
+    }
+
+    public async Task<Asset?> GetById(Guid id)
+    {
+        return await _assetRepository.GetByIdAsync(id);
     }
 }
