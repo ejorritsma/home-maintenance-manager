@@ -16,6 +16,17 @@ public class AssetService(IAssetRepository assetRepository)
         return asset.Id;
     }
 
+    public async Task Rename(Guid id, string newName)
+    {
+        var asset =
+            await _assetRepository.GetByIdAsync(id)
+            ?? throw new Exception($"Asset with ID {id} not found.");
+
+        asset.Rename(newName: newName);
+
+        await _assetRepository.SaveChangesAsync();
+    }
+
     public async Task<Asset?> GetById(Guid id)
     {
         return await _assetRepository.GetByIdAsync(id);

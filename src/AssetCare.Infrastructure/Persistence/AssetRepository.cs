@@ -15,7 +15,7 @@ public class AssetRepository(AppDbContext dbContext) : IAssetRepository
 
     public async Task<Asset?> GetByIdAsync(Guid id)
     {
-        return await _dbContext.Assets.AsNoTracking().SingleOrDefaultAsync(a => a.Id == id);
+        return await _dbContext.Assets.SingleOrDefaultAsync(a => a.Id == id);
     }
 
     public async Task SaveChangesAsync()

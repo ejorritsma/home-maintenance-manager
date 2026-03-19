@@ -30,4 +30,12 @@ public class AssetsController(AssetService assetService) : ControllerBase
 
         return Ok(response);
     }
+
+    [HttpPut("{id:guid}")]
+    public async Task<IActionResult> Rename(Guid id, RenameAssetRequest renameAssetRequest)
+    {
+        await _assetService.Rename(id: id, newName: renameAssetRequest.Name);
+
+        return NoContent();
+    }
 }
