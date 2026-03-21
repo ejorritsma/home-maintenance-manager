@@ -31,10 +31,24 @@ public class AssetsController(AssetService assetService) : ControllerBase
         return Ok(response);
     }
 
-    [HttpPut("{id:guid}")]
-    public async Task<IActionResult> Rename(Guid id, RenameAssetRequest renameAssetRequest)
+    [HttpPatch("{id:guid}")]
+    public async Task<IActionResult> Update(Guid id, UpdateAssetRequest updateAssetRequest)
     {
-        await _assetService.Rename(id: id, newName: renameAssetRequest.Name);
+        if (updateAssetRequest.Name is not null)
+        {
+            try
+            {
+                await _assetService.Rename(id: id, newName: updateAssetRequest.Name);
+            }
+            catch (InvalidOperationException ex)
+            {
+                return Conflict(ex.Message);
+            }
+        }
+        if (updateAssetRequest.Status.HasValue)
+        {
+            await _assetService.ChangeStatus(id: id, newStatus: updateAssetRequest.Status.Value);
+        }
 
         return NoContent();
     }

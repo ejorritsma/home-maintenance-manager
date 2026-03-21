@@ -13,6 +13,7 @@ public class AssetTests
 
         Assert.Equal(name, asset.Name);
         Assert.NotEqual(Guid.Empty, asset.Id);
+        Assert.Equal(AssetStatus.Active, asset.Status);
     }
 
     [Fact]
@@ -27,5 +28,14 @@ public class AssetTests
         var asset = new Asset(name: "Dishwasher");
 
         Assert.Throws<ArgumentException>(() => asset.Rename(""));
+    }
+
+    [Fact]
+    public void RenamingAsset_WithRetiredStatus_Throws()
+    {
+        var asset = new Asset(name: "Dishwasher");
+        asset.ChangeStatus(AssetStatus.Retired);
+
+        Assert.Throws<InvalidOperationException>(() => asset.Rename("Dishwasher (me)"));
     }
 }

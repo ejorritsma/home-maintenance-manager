@@ -27,6 +27,17 @@ public class AssetService(IAssetRepository assetRepository)
         await _assetRepository.SaveChangesAsync();
     }
 
+    public async Task ChangeStatus(Guid id, AssetStatus newStatus)
+    {
+        var asset =
+            await _assetRepository.GetByIdAsync(id)
+            ?? throw new Exception($"Asset with ID {id} not found.");
+
+        asset.ChangeStatus(newStatus: newStatus);
+
+        await _assetRepository.SaveChangesAsync();
+    }
+
     public async Task<Asset?> GetById(Guid id)
     {
         return await _assetRepository.GetByIdAsync(id);
