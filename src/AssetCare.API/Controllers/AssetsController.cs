@@ -26,7 +26,12 @@ public class AssetsController(AssetService assetService) : ControllerBase
         if (asset is null)
             return NotFound();
 
-        var response = new AssetResponse { Id = asset.Id, Name = asset.Name };
+        var response = new AssetResponse
+        {
+            Id = asset.Id,
+            Name = asset.Name,
+            Status = asset.Status,
+        };
 
         return Ok(response);
     }
