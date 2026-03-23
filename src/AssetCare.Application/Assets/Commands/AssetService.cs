@@ -10,6 +10,7 @@ public class AssetService(IAssetRepository assetRepository, ILogger<AssetService
 
     public async Task<Guid> Create(string name)
     {
+        _logger.LogInformation("Creating asset {AssetName}", name);
         var asset = new Asset(name: name);
 
         await _assetRepository.AddAsync(asset: asset);
@@ -20,7 +21,7 @@ public class AssetService(IAssetRepository assetRepository, ILogger<AssetService
 
     public async Task Rename(Guid id, string newName)
     {
-
+        _logger.LogInformation("Renaming asset {AssetId} to {NewName}", id, newName);
         var asset =
             await _assetRepository.GetByIdAsync(id)
             ?? throw new Exception($"Asset with ID {id} not found.");
@@ -32,6 +33,7 @@ public class AssetService(IAssetRepository assetRepository, ILogger<AssetService
 
     public async Task ChangeStatus(Guid id, AssetStatus newStatus)
     {
+        _logger.LogInformation("Change status of asset {AssetId} to {NewStatus}", id, newStatus);
         var asset =
             await _assetRepository.GetByIdAsync(id)
             ?? throw new Exception($"Asset with ID {id} not found.");
