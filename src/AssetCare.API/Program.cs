@@ -1,7 +1,9 @@
-using AssetCare.API.Contracts;
 using AssetCare.Application.Assets;
 using AssetCare.Application.Assets.Commands;
+using AssetCare.Application.Exceptions;
+using AssetCare.Domain.Exceptions;
 using AssetCare.Infrastructure.Persistence;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.EntityFrameworkCore;
 
@@ -32,7 +34,28 @@ var app = builder.Build();
 
 app.UseHttpLogging();
 
-// Add endpoints for controller actions
+// Set specific HTTP response codes for custom exceptions.
+app.UseExceptionHandler(errorApp =>
+{
+    errorApp.Run(async context =>
+    {
+        var exception = context.Features.Get<IExceptionHandlerFeature>()?.Error;
+
+        context.Response.ContentType = "application/json";
+
+        context.Response.StatusCode = exception switch
+        {
+            NotFoundException => StatusCodes.Status404NotFound,
+            ValidationException => StatusCodes.Status400BadRequest,
+            BusinessRuleException => StatusCodes.Status409Conflict,
+            _ => StatusCodes.Status500InternalServerError,
+        };
+
+        await context.Response.WriteAsJsonAsync(new { error = exception?.Message });
+    });
+});
+
+// Map endpoints to controller actions
 app.MapControllers();
 
 app.Run();

@@ -1,3 +1,4 @@
+using AssetCare.Application.Exceptions;
 using AssetCare.Domain.Entities;
 using Microsoft.Extensions.Logging;
 
@@ -24,7 +25,7 @@ public class AssetService(IAssetRepository assetRepository, ILogger<AssetService
         _logger.LogInformation("Renaming asset {AssetId} to {NewName}", id, newName);
         var asset =
             await _assetRepository.GetByIdAsync(id)
-            ?? throw new Exception($"Asset with ID {id} not found.");
+            ?? throw new NotFoundException($"Asset with ID {id} not found.");
 
         asset.Rename(newName: newName);
 
@@ -36,7 +37,7 @@ public class AssetService(IAssetRepository assetRepository, ILogger<AssetService
         _logger.LogInformation("Change status of asset {AssetId} to {NewStatus}", id, newStatus);
         var asset =
             await _assetRepository.GetByIdAsync(id)
-            ?? throw new Exception($"Asset with ID {id} not found.");
+            ?? throw new NotFoundException($"Asset with ID {id} not found.");
 
         asset.ChangeStatus(newStatus: newStatus);
 

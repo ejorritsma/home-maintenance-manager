@@ -1,4 +1,5 @@
 ﻿using AssetCare.Domain.Entities;
+using AssetCare.Domain.Exceptions;
 
 namespace AssetCare.Domain.Tests.Entities;
 
@@ -19,7 +20,7 @@ public class AssetTests
     [Fact]
     public void CreatingAsset_WithEmptyName_Throws()
     {
-        Assert.Throws<ArgumentException>(() => new Asset(name: ""));
+        Assert.Throws<ValidationException>(() => new Asset(name: ""));
     }
 
     [Fact]
@@ -27,7 +28,7 @@ public class AssetTests
     {
         var asset = new Asset(name: "Dishwasher");
 
-        Assert.Throws<ArgumentException>(() => asset.Rename(""));
+        Assert.Throws<ValidationException>(() => asset.Rename(""));
     }
 
     [Fact]
@@ -36,6 +37,6 @@ public class AssetTests
         var asset = new Asset(name: "Dishwasher");
         asset.ChangeStatus(AssetStatus.Retired);
 
-        Assert.Throws<InvalidOperationException>(() => asset.Rename("Dishwasher (me)"));
+        Assert.Throws<BusinessRuleException>(() => asset.Rename("Dishwasher (me)"));
     }
 }

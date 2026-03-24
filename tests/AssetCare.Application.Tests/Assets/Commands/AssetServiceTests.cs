@@ -2,6 +2,7 @@ namespace AssetCare.Application.Tests.Assets.Commands;
 
 using AssetCare.Application.Assets;
 using AssetCare.Application.Assets.Commands;
+using AssetCare.Application.Exceptions;
 using AssetCare.Domain.Entities;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
@@ -45,6 +46,8 @@ public class AssetServiceTests
     [Fact]
     public async Task Rename_WhenAssetDoesNotExist_Throws()
     {
-        await Assert.ThrowsAsync<Exception>(() => _service.Rename(Guid.AllBitsSet, "new name"));
+        await Assert.ThrowsAsync<NotFoundException>(() =>
+            _service.Rename(Guid.AllBitsSet, "new name")
+        );
     }
 }

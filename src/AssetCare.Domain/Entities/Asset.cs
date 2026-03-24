@@ -1,3 +1,5 @@
+using AssetCare.Domain.Exceptions;
+
 namespace AssetCare.Domain.Entities;
 
 public enum AssetStatus
@@ -16,7 +18,7 @@ public class Asset(string name)
     public void Rename(string newName)
     {
         if (Status is AssetStatus.Retired)
-            throw new InvalidOperationException("Cannot name a retired asset.");
+            throw new BusinessRuleException("Cannot name a retired asset.");
 
         Name = ValidateName(newName);
     }
@@ -29,7 +31,7 @@ public class Asset(string name)
     private static string ValidateName(string name)
     {
         if (string.IsNullOrWhiteSpace(name))
-            throw new ArgumentException("Name cannot be empty.", nameof(name));
+            throw new ValidationException("Name cannot be empty.");
 
         return name;
     }
