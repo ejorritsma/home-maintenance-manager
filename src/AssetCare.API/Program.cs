@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using AssetCare.Application.Assets;
 using AssetCare.Application.Assets.Commands;
 using AssetCare.Application.Exceptions;
@@ -27,8 +28,19 @@ builder.Services.AddHttpLogging(options =>
 builder.Services.AddScoped<IAssetRepository, AssetRepository>();
 builder.Services.AddScoped<AssetService>();
 
+// Add Swagger for API documentation and testing
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 // Register the API Controllers
-builder.Services.AddControllers();
+builder
+    .Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        // This will serialize enum values as their string representation instead of numeric values.
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
+;
 
 var app = builder.Build();
 
@@ -57,5 +69,8 @@ app.UseExceptionHandler(errorApp =>
 
 // Map endpoints to controller actions
 app.MapControllers();
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.Run();
