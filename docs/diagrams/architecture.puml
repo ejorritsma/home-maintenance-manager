@@ -1,0 +1,24 @@
+@startuml name "Architecture Diagram"
+package "API" {
+  [AssetsController]
+}
+
+package "Application" {
+  [AssetService]
+}
+
+package "Domain" {
+  [Asset]
+}
+
+package "Infrastructure" {
+  [AssetRepository]
+  [DbContext]
+}
+
+[AssetsController] --> [AssetService]
+[AssetService] --> [AssetRepository]
+[AssetRepository] --> [DbContext]
+[AssetService] --> [Asset]
+
+@enduml
